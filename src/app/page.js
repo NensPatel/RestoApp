@@ -49,30 +49,30 @@ export default function Home() {
     <>
       <CustomerHeader />
       <div className="flex flex-col items-center justify-center p-4">
-        <h1 className="text-2xl font-bold mb-4">Food Delivery App</h1>
-        <form className="w-full max-w-md flex">
-          <input
-            type="text"
-            placeholder="Enter Place"
-            className="w-1/2 p-2 border border-gray-300 text-center bg-transparent"
-            value={selectedLocation}
-            onClick={() => setShowLocation(true)}
-          />
-          <ul className="bg-white border-2 absolute p-0 mt-[42px]  text-center cursor-pointer font-mono space-y-2">
-            {showLocation &&
-              locations.map((item) => (
-                <>
+        <h1 className="text-3xl font-bold mb-4">Food Delivery App</h1>
+        <form className="w-full max-w-lg flex flex-col sm:flex-row gap-2">
+          <div className="relative w-full sm:w-1/2">
+            <input
+              type="text"
+              placeholder="Enter Place"
+              className="w-full p-2 border border-gray-300 text-center bg-transparent"
+              value={selectedLocation}
+              onClick={() => setShowLocation(true)}
+            />
+            {showLocation && (
+              <ul className="bg-white border-2 absolute w-full p-0 mt-1 text-center cursor-pointer font-mono space-y-2 max-h-60 overflow-y-auto z-10">
+                {locations.map((item) => (
                   <li
                     key={item}
-                    className="w-[150px]"
+                    className="p-2 hover:bg-gray-200"
                     onClick={() => handleListItem(item)}
                   >
                     {item}
                   </li>
-                  <hr />
-                </>
-              ))}
-          </ul>
+                ))}
+              </ul>
+            )}
+          </div>
           <input
             type="text"
             placeholder="Enter Food Name or Restaurant Name"
@@ -87,19 +87,19 @@ export default function Home() {
         {restaurants.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-4"
+            className="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4"
             onClick={() =>
               router.push("explore/" + item.name + "?id=" + item._id)
             }
           >
             <div className="flex-1">
-              <h1 className="text-3xl font-extrabold text-orange-500">
+              <h1 className="text-2xl font-extrabold text-orange-500">
                 {item.name}
               </h1>
               <h3 className="text-lg text-gray-700">Contact: {item.contact}</h3>
             </div>
             <div className="flex-1">
-              <h1 className="text-xl">City: {item.city}</h1>
+              <h1 className="text-lg">City: {item.city}</h1>
               <h3 className="text-lg text-gray-700">Email: {item.email}</h3>
             </div>
           </div>

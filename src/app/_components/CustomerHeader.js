@@ -1,6 +1,29 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const CustomerHeader = () => {
+const CustomerHeader = (props) => {
+  console.log(props);
+  const cartStorage = JSON.parse(localStorage.getItem("Cart"));
+  const [cartNumber, setCartNumber] = useState(cartStorage?.length);
+  const [cartItem, setCartItem] = useState(cartStorage);
+
+  useEffect(() => {
+    if (props.cartData) {
+      console.log(props);
+      if (cartNumber) {
+        let localCartItem = cartItem;
+        localCartItem.push(JSON.parse(JSON.stringify(props.cartData)));
+        setCartItem(localCartItem);
+        setCartNumber(cartNumber + 1);
+        localStorage.setItem("Cart", JSON.stringify(localCartItem));
+      } else {
+        setCartNumber(1);
+        setCartItem([props.cartData]);
+        localStorage.setItem("Cart", JSON.stringify([props.cartData]));
+      }
+    }
+  }, [props.cartData]);
+
   return (
     <>
       <div className=" text-white">
@@ -28,7 +51,7 @@ const CustomerHeader = () => {
 
             <li className="hover:text-[#81d3e7]">
               <Link href="/" className="px-3 py-2 rounded">
-                Cart[0]
+                Cart[{cartNumber ? cartNumber : 0}]
               </Link>
             </li>
 
